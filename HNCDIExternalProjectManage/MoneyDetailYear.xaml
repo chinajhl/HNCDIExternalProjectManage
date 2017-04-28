@@ -1,0 +1,31 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="HNCDIExternalProjectManage.MoneyDetailYear"
+	x:Name="Window"
+	Title="年度科研经费收支一览表"
+	Width="480" Height="240" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="LayoutRoot" Margin="10">
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Label Content="年度(四位整数)：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+		<DockPanel x:Name="dockPanel" LastChildFill="False" Grid.Column="1">
+			<TextBox x:Name="textboxYear" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=dockPanel, Mode=OneWay}"/>
+		</DockPanel>
+		<Button x:Name="buttonRun" Content="生  成" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Grid.Row="3" Margin="0,0,10,0" Click="buttonRun_Click"/>
+		<Button x:Name="buttonCancel" Content="取  消" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Grid.Row="3" Grid.Column="1" IsCancel="True" Margin="10,0,0,0"/>
+        <Label Content="挂靠处室(若空则为全部处室)：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,11" Grid.Row="1"/>
+        <DockPanel x:Name="dockPanel1" LastChildFill="False" Grid.Column="1" Grid.Row="1">
+            <TextBox x:Name="textboxDepartment" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=dockPanel1, Mode=OneWay}"/>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HNCDIExternalProject" Class="DataClassesProjectClassifyDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SPS-DATA;Initial Catalog=HNCDIExternalProject;Integrated Security=True" SettingsObjectName="HNCDIExternalProjectManage.Properties.Settings" SettingsPropertyName="HNCDIExternalProjectConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ProjectClassify" Member="ProjectClassify">
+    <Type Name="ProjectClassify">
+      <Column Name="ClassifyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectClassify" Member="ProjectClassify1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ProjectClassify_ProjectBase" Member="ProjectBase" ThisKey="ClassifyId" OtherKey="ProjectClassifyID" Type="ProjectBase" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FundClassify" Member="FundClassify">
+    <Type Name="FundClassify">
+      <Column Name="FandClassifyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FundClassify" Member="FundClassify1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="IncomeOrPay" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="FundClassify_Funds" Member="Funds" ThisKey="FandClassifyId" OtherKey="FundClassifyID" Type="Funds" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Funds" Member="Funds">
+    <Type Name="Funds">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FundClassifyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Source" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Money" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Handled" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="SubPrincipal" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="FundClassify_Funds" Member="FundClassify" ThisKey="FundClassifyID" OtherKey="FandClassifyId" Type="FundClassify" IsForeignKey="true" />
+      <Association Name="ProjectBase_Funds" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PatentClassify" Member="PatentClassify">
+    <Type Name="PatentClassify">
+      <Column Name="PatentClassifyID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PatentClassify" Member="PatentClassify1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PatentClassify_Patents" Member="Patents" ThisKey="PatentClassifyID" OtherKey="PatentClassifyID" Type="Patents" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Patents" Member="Patents">
+    <Type Name="Patents">
+      <Column Name="PatentsId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PatentClassifyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PatentNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PatentName" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="PatendDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PatentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="PatentClassify_Patents" Member="PatentClassify" ThisKey="PatentClassifyID" OtherKey="PatentClassifyID" Type="PatentClassify" IsForeignKey="true" />
+      <Association Name="ProjectBase_Patents" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RateClassify" Member="RateClassify">
+    <Type Name="RateClassify">
+      <Column Name="RateClassifyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RateClassify" Member="RateClassify1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="RateClassify_RateResults" Member="RateResults" ThisKey="RateClassifyId" OtherKey="RateClassifyID" Type="RateResults" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RateResults" Member="RateResults">
+    <Type Name="RateResults">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RateClassifyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RateDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="RateClassify_RateResults" Member="RateClassify" ThisKey="RateClassifyID" OtherKey="RateClassifyId" Type="RateClassify" IsForeignKey="true" />
+      <Association Name="ProjectBase_RateResults" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Results" Member="Results">
+    <Type Name="Results">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RegistDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RegistNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ProjectBase_Results" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Reward" Member="Reward">
+    <Type Name="Reward">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RewardName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RewardClassifyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RewardClassID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RewardDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReawardYear" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="RewardDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Workers" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="RewardClass_Reward" Member="RewardClass" ThisKey="RewardClassID" OtherKey="RewardClassId" Type="RewardClass" IsForeignKey="true" />
+      <Association Name="RewardClassify_Reward" Member="RewardClassify" ThisKey="RewardClassifyID" OtherKey="RewardClassifyID" Type="RewardClassify" IsForeignKey="true" />
+      <Association Name="ProjectBase_Reward" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RewardClass" Member="RewardClass">
+    <Type Name="RewardClass">
+      <Column Name="RewardClassId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RewardClass" Member="RewardClass1" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Association Name="RewardClass_Reward" Member="Reward" ThisKey="RewardClassId" OtherKey="RewardClassID" Type="Reward" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RewardClassify" Member="RewardClassify">
+    <Type Name="RewardClassify">
+      <Column Name="RewardClassifyID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RewardClassify" Member="RewardClassify1" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="RewardClassify_Reward" Member="Reward" ThisKey="RewardClassifyID" OtherKey="RewardClassifyID" Type="Reward" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TeamDepartments" Member="TeamDepartments">
+    <Type Name="TeamDepartments">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ProjectBase_TeamDepartments" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TeamWorkers" Member="TeamWorkers">
+    <Type Name="TeamWorkers">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WorkerName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ProjectBase_TeamWorkers" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProjectBase" Member="ProjectBase">
+    <Type Name="ProjectBase">
+      <Column Name="ProjectId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProjectClassifyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProjectNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ContractNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FirstParty" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SecondParty" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SetupYear" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ProjectName" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PlanFinishDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FinishDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Principal" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="SumMoney" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Ministry" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Transportation" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Science" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SupportEngineering" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Other" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="AuthorizeMoney" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="AnchoredDepartment" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="IsMainResearch" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IsKnot" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="IsFiled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Association Name="ProjectBase_Funds" Member="Funds" ThisKey="ProjectId" OtherKey="ProjectID" Type="Funds" />
+      <Association Name="ProjectBase_Patents" Member="Patents" ThisKey="ProjectId" OtherKey="ProjectID" Type="Patents" />
+      <Association Name="ProjectBase_RateResults" Member="RateResults" ThisKey="ProjectId" OtherKey="ProjectID" Type="RateResults" />
+      <Association Name="ProjectBase_Results" Member="Results" ThisKey="ProjectId" OtherKey="ProjectID" Type="Results" />
+      <Association Name="ProjectBase_Reward" Member="Reward" ThisKey="ProjectId" OtherKey="ProjectID" Type="Reward" />
+      <Association Name="ProjectBase_TeamDepartments" Member="TeamDepartments" ThisKey="ProjectId" OtherKey="ProjectID" Type="TeamDepartments" />
+      <Association Name="ProjectBase_TeamWorkers" Member="TeamWorkers" ThisKey="ProjectId" OtherKey="ProjectID" Type="TeamWorkers" />
+      <Association Name="ProjectBase_ProjectBase" Member="ProjectBase2" ThisKey="ProjectId" OtherKey="ParentID" Type="ProjectBase" />
+      <Association Name="ProjectBase_ProjectContracts" Member="ProjectContracts" ThisKey="ProjectId" OtherKey="ProjectID" Type="ProjectContracts" />
+      <Association Name="ProjectBase_ProjectBase" Member="ProjectBase1" ThisKey="ParentID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" />
+      <Association Name="ProjectClassify_ProjectBase" Member="ProjectClassify" ThisKey="ProjectClassifyID" OtherKey="ClassifyId" Type="ProjectClassify" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_Funds" Member="View_Funds">
+    <Type Name="View_Funds">
+      <Column Name="FundClassify" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Source" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Money" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Handled" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="SubPrincipal" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_Rewards" Member="View_Rewards">
+    <Type Name="View_Rewards">
+      <Column Name="RewardClass" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="RewardClassify" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RewardName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RewardDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReawardYear" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="RewardDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Workers" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_Patents" Member="View_Patents">
+    <Type Name="View_Patents">
+      <Column Name="PatentClassify" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PatentNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PatentName" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="PatendDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PatentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_Rates" Member="View_Rates">
+    <Type Name="View_Rates">
+      <Column Name="RateClassify" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RateDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ExcelFileType" Member="ExcelFileType">
+    <Type Name="ExcelFileType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ExcelFileType" Member="ExcelFileType1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_SubTotalFund" Member="View_SubTotalFund">
+    <Type Name="View_SubTotalFund">
+      <Column Name="IncomeOrPay" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SubTotalMoney" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="FundClassify" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_ProjectFundClassifies" Member="View_ProjectFundClassifies">
+    <Type Name="View_ProjectFundClassifies">
+      <Column Name="FundClassifyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.View_ProjectFundSumIncoming" Member="View_ProjectFundSumIncoming">
+    <Type Name="View_ProjectFundSumIncoming">
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SumMoney" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="FundClassify" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="IncomeOrPay" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContractTypes" Member="ContractTypes">
+    <Type Name="ContractTypes">
+      <Column Name="TypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContractType" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="ContractTypes_ProjectContracts" Member="ProjectContracts" ThisKey="TypeID" OtherKey="TypeID" Type="ProjectContracts" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProjectContracts" Member="ProjectContracts">
+    <Type Name="ProjectContracts">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ContractNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProjectName" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="FirstParty" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SecondParty" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ContractPeriod" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Principal" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="SumMoney" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ContractDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="ContractTypes_ProjectContracts" Member="ContractTypes" ThisKey="TypeID" OtherKey="TypeID" Type="ContractTypes" IsForeignKey="true" />
+      <Association Name="ProjectBase_ProjectContracts" Member="ProjectBase" ThisKey="ProjectID" OtherKey="ProjectId" Type="ProjectBase" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+</Database>

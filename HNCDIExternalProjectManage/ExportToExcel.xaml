@@ -1,0 +1,181 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="HNCDIExternalProjectManage.ExportToExcel"
+	x:Name="Window"
+	Title="导出数据到Excel"
+	Width="1024" Height="768" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+
+	<Grid x:Name="LayoutRoot" Margin="10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="3*" />
+			<ColumnDefinition Width="7*" />
+		</Grid.ColumnDefinitions>
+		<DockPanel x:Name="dockPanel">
+			<HeaderedContentControl Header="可导出Excel表格列表" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+				<ListBox x:Name="ListFileType" ItemsSource="{Binding}" Height="700" SelectionChanged="ListFileType_SelectionChanged" />
+			</HeaderedContentControl>
+		</DockPanel>
+		<Grid Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition Height="40" />
+			</Grid.RowDefinitions>
+			<GroupBox Header="导出选项">
+				<DockPanel>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<GroupBox>
+							<GroupBox.Header>
+								<CheckBox x:Name="IsTimeCheck" Content="时间要求" />
+							</GroupBox.Header>
+							<DockPanel>
+								<RadioButton x:Name="DateSetupYear" VerticalAlignment="Center" Width="300" BorderBrush="#FF0A0000" BorderThickness="2" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=IsTimeCheck}">
+									<Grid Width="250" Height="100">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="3*" />
+											<ColumnDefinition Width="7*" />
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="4*" />
+											<RowDefinition Height="30*" />
+											<RowDefinition Height="33*" />
+											<RowDefinition Height="33*" />
+										</Grid.RowDefinitions>
+										<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.RowSpan="2"><Run Text="立项时间" /></TextBlock>
+										<TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="始年度：" VerticalAlignment="Center" Grid.Row="2" Margin="0,9.046,5,9.047" />
+										<TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="终年度：" VerticalAlignment="Center" Grid.Row="3" Margin="0,9.046,5,9.047" />
+										<DockPanel x:Name="dockPanel1" LastChildFill="False" Grid.Row="1" Grid.Column="1" Margin="0,29.598,0,0" Grid.RowSpan="2">
+											<TextBox x:Name="StartYear" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=dockPanel1, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=DateSetupYear}" />
+										</DockPanel>
+										<DockPanel x:Name="dockPanel2" LastChildFill="False" Grid.Row="3" Grid.Column="1" Margin="0,0,0,0.001">
+											<TextBox x:Name="EndYear" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=dockPanel2, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=DateSetupYear}" />
+										</DockPanel>
+									</Grid>
+								</RadioButton>
+								<RadioButton x:Name="DateContractPeriod" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=IsTimeCheck}">
+									<Grid Width="250" Height="100">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="3*" />
+											<ColumnDefinition Width="7*" />
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
+										</Grid.RowDefinitions>
+										<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="项目开始时间" /></TextBlock>
+										<TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="始时间：" VerticalAlignment="Center" Grid.Row="1" Margin="5" />
+										<TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="终时间：" VerticalAlignment="Center" Grid.Row="2" Margin="5" />
+										<DockPanel x:Name="dockPanel3" LastChildFill="False" Grid.Row="1" Grid.Column="1">
+											<TextBox x:Name="FirstDate" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=dockPanel1, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=DateContractPeriod}" />
+										</DockPanel>
+										<DockPanel x:Name="dockPanel4" LastChildFill="False" Grid.Row="2" Grid.Column="1">
+											<TextBox x:Name="FinalDate" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=dockPanel2, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=DateContractPeriod}" />
+										</DockPanel>
+									</Grid>
+								</RadioButton>
+							</DockPanel>
+						</GroupBox>
+						<GroupBox Header="字段" Grid.Row="1">
+							<WrapPanel x:Name="fields" Margin="0,0,-12,0" UseLayoutRounding="False">
+								<CheckBox x:Name="ProjectNo" Content="项目编号" VerticalAlignment="Top" IsChecked="True" HorizontalAlignment="Left" Margin="5" Click="ProjectNo_Click" />
+								<CheckBox x:Name="FirstParty" Content="立项部门" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" IsChecked="True" Click="FirstParty_Click" />
+								<CheckBox x:Name="SetupYear" Content="立项时间" VerticalAlignment="Top" Margin="5" IsChecked="True" Click="SetupYear_Click" />
+								<CheckBox x:Name="ProjectName" Content="项目名称" VerticalAlignment="Top" Margin="5" IsChecked="True" Click="ProjectName_Click" />
+								<CheckBox x:Name="SecondParty" Content="乙方" VerticalAlignment="Top" IsChecked="True" Margin="5" Click="SecondParty_Click" />
+								<CheckBox x:Name="ContractNo" Content="合同编号" VerticalAlignment="Top" Margin="5" Click="ContractNo_Click" />
+								<CheckBox x:Name="Principal" Content="项目负责人" VerticalAlignment="Top" Margin="5" IsChecked="True" Click="Principal_Click" />
+								<CheckBox x:Name="ContractPeriod" Content="合同时限" VerticalAlignment="Top" Margin="5" IsChecked="True" Click="ContractPeriod_Click" />
+								<CheckBox x:Name="SumMoney" Content="合同额" VerticalAlignment="Top" Margin="5" IsChecked="True" Click="SumMoney_Click" />
+								<CheckBox x:Name="MoneySourceDetail" Content="经费来源计划" VerticalAlignment="Top" Margin="5" Click="MoneySourceDetail_Click" />
+								<CheckBox x:Name="MoneyDetail" Content="经费使用统计" VerticalAlignment="Top" Margin="5" Click="MoneyDetail_Click" />
+								<CheckBox x:Name="AnchoredDepartment" Content="挂靠处室" IsChecked="True" Margin="5" Click="AnchoredDepartment_Click" />
+								<CheckBox x:Name="Workers" Content="团队人员" Margin="5" Click="Workers_Click" />
+								<CheckBox x:Name="TeamDepartment" Content="协作单位" Margin="5" Click="TeamDepartment_Click" />
+								<!--<CheckBox x:Name="CompleteDepartment" Content="完成单位" Margin="5" Click="CompleteDepartment_Click" />
+								<CheckBox x:Name="CompleteWorks" Content="完成人员" Margin="5" Click="CompleteWorks_Click" />
+								<CheckBox x:Name="FinishState" Content="完成情况" Margin="5" Click="FinishState_Click" />-->
+								<CheckBox x:Name="FactFinishDate" Content="实际完成时间" Margin="5" Click="FactFinishDate_Click" />
+								<CheckBox x:Name="RateState" Content="鉴定情况" Margin="5" Click="RateState_Click" />
+								<CheckBox x:Name="RewardState" Content="获奖情况" Margin="5" Click="RewardState_Click" />
+								<CheckBox x:Name="PatentState" Content="知识产权" Margin="5" Click="PatentState_Click" />
+								<CheckBox x:Name="MainResearchState" Content="主研情况" Margin="5" Click="MainResearchState_Click" />
+								<CheckBox x:Name="KnoteState" Content="结题情况" Margin="5" Click="KnoteState_Click" />
+								<CheckBox x:Name="FiledState" Content="归档情况" Margin="5" Click="FiledState_Click" />
+								<CheckBox x:Name="Note" Content="备注" Margin="5" Click="Note_Click" />
+							</WrapPanel>
+						</GroupBox>
+						<GroupBox x:Name="groupBox" Grid.Row="2">
+							<GroupBox.Header>
+								<CheckBox x:Name="isKnoteReq" Content="结题要求" />
+							</GroupBox.Header>
+							<DockPanel LastChildFill="False" Margin="0">
+								<CheckBox x:Name="CheckAndAccept" Content="验收" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" IsEnabled="{Binding IsChecked, ElementName=isKnoteReq}" />
+								<CheckBox x:Name="Authenticate" Content="鉴定" VerticalAlignment="Center" Margin="10" IsEnabled="{Binding IsChecked, ElementName=isKnoteReq}" />
+								<CheckBox x:Name="Finished" Content="已结题（验收或鉴定）" VerticalAlignment="Center" Margin="10" IsEnabled="{Binding IsChecked, ElementName=isKnoteReq}" />
+								<CheckBox x:Name="Unfinished" Content="尚未结题" VerticalAlignment="Center" Margin="10" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=isKnoteReq}" />
+								<CheckBox x:Name="FundFinished" Content="结清" VerticalAlignment="Center" Margin="10" IsEnabled="{Binding IsChecked, ElementName=isKnoteReq}" />
+							</DockPanel>
+						</GroupBox>
+						<GroupBox Grid.Row="3">
+							<GroupBox.Header>
+								<CheckBox x:Name="IsFiledReq" Content="归档要求" />
+							</GroupBox.Header>
+							<DockPanel LastChildFill="False">
+								<RadioButton x:Name="IsFiled" Content="已归档" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" IsEnabled="{Binding IsChecked, ElementName=IsFiledReq}" />
+								<RadioButton x:Name="UnFiled" Content="未归档" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=IsFiledReq}" />
+							</DockPanel>
+						</GroupBox>
+						<GroupBox Header="输出字段排序" Grid.Row="4">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="8.5*" />
+									<ColumnDefinition Width="1.5*" />
+								</Grid.ColumnDefinitions>
+								<GroupBox Header="源字段" Margin="5">
+									<ListBox x:Name="ListSourceFields" Margin="5">
+										<ListBox.Template>
+											<ControlTemplate TargetType="{x:Type ListBox}">
+												<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+													<StackPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True" />
+												</ScrollViewer>
+											</ControlTemplate>
+										</ListBox.Template>
+									</ListBox>
+								</GroupBox>
+								<DockPanel LastChildFill="False" Grid.Column="1">
+									<Grid Height="108.712" VerticalAlignment="Top" Width="100">
+										<Grid.RowDefinitions>
+											<RowDefinition />
+											<RowDefinition />
+										</Grid.RowDefinitions>
+										<Button x:Name="buttonToLeft" Content="&lt;-左移" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Margin="5" Click="buttonToLeft_Click" />
+										<Button x:Name="buttonToRight" Content="-&gt;右移" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Row="1" Margin="5" Click="buttonToRight_Click" />
+									</Grid>
+								</DockPanel>
+							</Grid>
+						</GroupBox>
+					</Grid>
+				</DockPanel>
+			</GroupBox>
+			<DockPanel x:Name="dockPanel5" LastChildFill="False" Grid.Row="1">
+				<Grid Width="{Binding ActualWidth, ElementName=dockPanel5, Mode=OneWay}">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Button x:Name="buttonOK" Content="导  出" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Margin="0,0,20,0" Click="buttonOK_Click" />
+					<Button x:Name="buttonCancel" Content="退  出" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Grid.Column="1" Margin="20,0,0,0" IsCancel="True" />
+				</Grid>
+			</DockPanel>
+		</Grid>
+	</Grid>
+</Window>

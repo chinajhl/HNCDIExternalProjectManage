@@ -1,0 +1,13 @@
+﻿<Window x:Class="HNCDIExternalProjectManage.TestTreeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TestTreeView" Height="300" Width="300">
+    <Grid x:Name="grid">
+        <DockPanel x:Name="dockPanel" LastChildFill="False" Margin="0">
+            <DockPanel.Resources>
+                
+            </DockPanel.Resources>
+            <TreeView x:Name="tv" ItemsSource="{Binding}" Height="269" Width="{Binding ActualWidth, ElementName=dockPanel, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </DockPanel>
+    </Grid>
+</Window>

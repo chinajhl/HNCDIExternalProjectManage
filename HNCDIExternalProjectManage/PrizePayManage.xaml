@@ -1,0 +1,163 @@
+﻿<Window x:Class="HNCDIExternalProjectManage.PrizePayManage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:HNCDIExternalProjectManage"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="HNCDI科技项目管理系统——奖金发放"
+        Width="960"
+        Height="960"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="contentLeftStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment"  Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment"  Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="CenterStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="listviewItemKey" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="VerticalAlignment"  Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <!--Setter Property="Padding" Value="4"/-->
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="370" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="DataGridPrizes" ItemsSource="{Binding}" LoadingRow="DataGridPrizes_LoadingRow" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single" SelectionChanged="DataGridPrizes_SelectionChanged">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="部  门" Width="1.5*" Binding="{Binding Path=Department}" ElementStyle="{StaticResource contentCenterStyle}" />
+                <DataGridTextColumn Header="姓  名" Width="1*" Binding="{Binding Name}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="奖项名称" Width="1.5*" Binding="{Binding AwardName}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="奖  金" Width="1*" Binding="{Binding Prize,StringFormat=\{0:c\}}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="年  度" Width="1*" Binding="{Binding PayYear}" ElementStyle="{StaticResource contentCenterStyle}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid x:Name="GridDetail"
+              Grid.Row="1"
+              DataContext="{Binding}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="150px" />
+                <RowDefinition Height="150px" />
+                <RowDefinition Height="80px"/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Label HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Content="项目名称：" />
+            <DockPanel Grid.Column="1">
+                <TextBlock x:Name="ProjectName"
+                           VerticalAlignment="Center"
+                           Text="{Binding}" />
+            </DockPanel>
+            <Label Grid.Row="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Content="部门：" />
+            <DockPanel x:Name="dockPanel"
+                       Grid.Row="1"
+                       Grid.Column="1">
+                <ListBox x:Name="ListBoxDepartment"
+                         Width="{Binding ActualWidth,
+                                         ElementName=dockPanel,
+                                         Mode=OneWay}"
+                         Margin="0,10"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         SelectionChanged="ListBoxDepartment_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+            <Label Grid.Row="2"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Content="员工：" />
+            <DockPanel x:Name="dockPanel1" Grid.Row="2" Grid.Column="1">
+                <ListBox x:Name="ListBoxEmployee" Margin="0,10" SelectionChanged="ListBoxEmployee_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+            <Label Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Content="奖项类别："></Label>
+            <DockPanel Grid.Row="3" Grid.Column="1">
+                <ListBox x:Name="ListBoxPrizeClassify" ItemsSource="{Binding}" Margin="0,10" Width="{Binding ActualWidth, ElementName=dockPanel1, Mode=OneWay}" SelectionChanged="ListBoxPrizeClassify_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PrizeClassifyName}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+            <Label Grid.Row="4" Content="奖项名称：" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+            <DockPanel Grid.Row="4" Grid.Column="1">
+                <TextBox x:Name="TextBoxAwardName" VerticalAlignment="Center" Text="{Binding AwardName}" PreviewKeyDown="TextBoxAwardName_PreviewKeyDown" LostFocus="TextBoxAwardName_LostFocus"></TextBox>
+            </DockPanel>
+            <Label Grid.Row="5"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Content="奖金（元）：" />
+            <DockPanel Grid.Row="5" Grid.Column="1">
+                <TextBox x:Name="TextBoxPrize"
+                         VerticalAlignment="Center"
+                         PreviewKeyDown="TextBoxPrize_PreviewKeyDown"
+                         Text="{Binding Prize}" LostFocus="TextBoxPrize_LostFocus" />
+            </DockPanel>
+            <Label Grid.Row="6"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Content="发放日期：" />
+            <DockPanel Grid.Row="6" Grid.Column="1">
+                <TextBox x:Name="TextBoxYear" VerticalAlignment="Center" LostFocus="TextBoxYear_LostFocus" PreviewKeyDown="TextBoxYear_PreviewKeyDown"></TextBox>
+            </DockPanel>
+            <DockPanel Grid.Row="7"
+                       Grid.ColumnSpan="2"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+                <Button x:Name="ButtonPay"
+                        Margin="0,0,10,0"
+                        Content="发  放"
+                        GotFocus="ButtonPay_GotFocus" Click="ButtonPay_Click" IsEnabled="False" />
+                <Button x:Name="ButtonRemove"
+                        Margin="10,0"
+                        Content="删  除"
+                        GotFocus="ButtonRemove_GotFocus" Click="ButtonRemove_Click" IsEnabled="False" />
+                <Button x:Name="ButtonCancel"
+                        Margin="10,0,0,0"
+                        Click="ButtonCancel_Click"
+                        Content="退  出"
+                        GotFocus="ButtonCancel_GotFocus"
+                        IsCancel="True" />
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>
